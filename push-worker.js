@@ -1,5 +1,5 @@
 // 86acbd31cd7c09cf30acb66d2fbedc91daa48b86:1715970619.5832934
-importScripts('https://aswpsdkus.com/notify/v1/ua-sdk.min.js')
+importScripts('https://aswpsdkus.com/notify/v2/ua-sdk.min.js')
 uaSetup.worker(self, {
   defaultIcon: 'https://archive.smashing.media/assets/344dbf88\u002Dfdf9\u002D42bb\u002Dadb4\u002D46f01eedd629/d0a4481f\u002De801\u002D4cb7\u002D9daa\u002D17cdae32cc89/icon\u002Ddesign\u002D21\u002Dopt.png',
   defaultTitle: 'benjaminpersitz.dev',

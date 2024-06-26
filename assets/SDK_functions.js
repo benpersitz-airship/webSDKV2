@@ -5,7 +5,7 @@ function prompt_registration() {
 		sdk.plugins
 			.load(
 				"html-prompt",
-				"https://aswpsdkus.com/notify/v1/ua-html-prompt.min.js",
+				"https://aswpsdkus.com/notify/v2/ua-html-prompt.min.js",
 				{
 					askAgainDelay: 0,
 					stylesheet: "assets/airshipstyles.css",
