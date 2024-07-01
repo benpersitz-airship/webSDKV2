@@ -120,24 +120,48 @@ async function associateNamedUser() {
     notifyResult(result)
 }
 
-function addTags() {
+async function addTags() {
+	let result = false;
 	const tagNU = document.getElementById("tagNU");
-
-	if (tagNU.checked) {
-		// Add SDK codes to add tags on Named User
-	} else {
-		// Add SDK codes to add tags on Channel
+	const tagGroup = document.getElementById("tag-group").value;
+	const tagString = document.getElementById("tag-name").value;
+	let tagArray = tagString.split(",");
+	tagArray = tagArray.map((tag) => tag.trim());
+	const SDK = await UA;
+	for (let tag of tagArray) {
+		if (tagNU.checked) {
+            const contact = await SDK.contact
+            const editor = contact.editTags()
+			result = await editor.add(tag, tagGroup);
+		} else {
+            const channel = await SDK.channel
+            const editor = channel.editTags()
+			result = await editor.add(tag, tagGroup);
+		}
 	}
+	notifyResult(result);
 }
 
-function removeTags() {
+async function removeTags() {
+	let result = false;
 	const tagNU = document.getElementById("tagNU");
-
-	if (tagNU.checked) {
-		// Add SDK codes to remove tags on Named User
-	} else {
-		// Add SDK codes to remove tags on Channel
+	const tagGroup = document.getElementById("tag-group").value;
+	const tagString = document.getElementById("tag-name").value;
+	let tagArray = tagString.split(",");
+	tagArray = tagArray.map((tag) => tag.trim());
+	const SDK = await UA;
+	for (let tag of tagArray) {
+		if (tagNU.checked) {
+            const contact = await SDK.contact
+            const editor = await contact.editTags()
+			result = await editor.remove(tag, tagGroup);
+		} else {
+            const channel = await SDK.channel
+            const editor = await channel.editTags()
+			result = await channel.tags.remove(tag, tagGroup);
+		}
 	}
+	notifyResult(result);
 }
 
 function setTags() {
