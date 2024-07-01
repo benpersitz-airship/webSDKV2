@@ -58,7 +58,7 @@ async function promptRegistration() {
 	);
 	plugin.prompt();
 }
-.
+
 async function prompt_sms_form() {
     const sdk = await UA
     let options = {
@@ -115,7 +115,7 @@ async function associateNamedUser() {
     const sdk = await UA
     const nuValue = document.querySelector("#nuid").value
     const contact = await sdk.contact
-    contact.identify(nuvalue)
+    contact.identify(nuValue)
 }
 
 function addTags() {
