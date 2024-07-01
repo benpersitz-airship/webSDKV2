@@ -87,6 +87,7 @@ async function prompt_sms_form() {
 }
 
 async function prompt_email_form() {
+    const sdk = await UA
 	let options = {
 		platform: "email",
 		size: "large",
@@ -115,7 +116,8 @@ async function associateNamedUser() {
     const sdk = await UA
     const nuValue = document.querySelector("#nuid").value
     const contact = await sdk.contact
-    contact.identify(nuValue)
+    const result = await contact.identify(nuValue)
+    notifyResult(result)
 }
 
 function addTags() {
@@ -155,5 +157,34 @@ function setAttrs() {
 		// Add SDK codes to set attributes on Named User
 	} else {
 		// Add SDK codes to set attributes on Channel
+	}
+}
+
+function notifyResult(result) {
+	const tagForm = document.querySelector("#tags-form");
+	if (result == true) {
+		console.log("tag operation completed successfully");
+		Toastify({
+			text: "Tag operation completed successfully",
+			duration: 5000,
+			className: "success-toast",
+			position: "center",
+			close: true,
+			style: {
+				background: "green"
+			}
+		}).showToast();
+		tagForm.reset();
+	} else {
+		Toastify({
+			text: "Error completing the tag operation",
+			duration: 5000,
+			className: "error-toast",
+			position: "center",
+			close: true,
+			style: {
+				background: "red"
+			}
+		}).showToast();
 	}
 }
