@@ -186,11 +186,29 @@ async function setTags() {
 	notifyResult(result);
 }
 
-function setAttrs() {
+async function setAttrs() {
 	const attrNU = document.getElementById("attrNU");
-    console.log('wow')
+    const attrForm = document.querySelector("#attr-form");
+	const SDK = await UA;
+	const fnValue = document.querySelector("#first_name").value;
+	const lnValue = document.querySelector("#last_name").value;
+	const tierValue = document.querySelector("#loyalty_tier").value;
+	let valueList = {
+		first_name: fnValue,
+		last_name: lnValue,
+		loyalty_tier: tierValue
+	};
+	for (let value of Object.keys(valueList)) {
+		if (valueList[value] == "") {
+			delete valueList[value];
+		} else if (valueList[value] == "null") {
+			valueList[value] = "";
+		}
+	}
 	if (attrNU.checked) {
-		// Add SDK codes to set attributes on Named User
+        const contact = await sdk.Contact
+		const editor = await contact.editAttributes()
+        const result = await editor.set(valueList)
 	} else {
 		// Add SDK codes to set attributes on Channel
 	}
