@@ -209,7 +209,7 @@ async function setAttrs() {
         const contact = await SDK.contact
 		const editor = await contact.editAttributes().set("")
         for(let key of Object.keys(valueList)){
-            editor.set(key, valueList.key)
+            editor.set(key, valueList[key])
         }
         await editor.apply()
         // const result = await editor.set(valueList).apply()
