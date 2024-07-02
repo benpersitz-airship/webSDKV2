@@ -132,11 +132,11 @@ async function addTags() {
 		if (tagNU.checked) {
             const contact = await SDK.contact
             const editor = contact.editTags()
-			result = await editor.add(tag, tagGroup);
+			result = await editor.add(tag, tagGroup).apply();
 		} else {
             const channel = await SDK.channel
             const editor = channel.editTags()
-			result = await editor.add(tag, tagGroup);
+			result = await editor.add(tag, tagGroup).apply();
 		}
 	}
 	notifyResult(result);
@@ -154,24 +154,34 @@ async function removeTags() {
 		if (tagNU.checked) {
             const contact = await SDK.contact
             const editor = await contact.editTags()
-			result = await editor.remove(tag, tagGroup);
+			result = await editor.remove(tag, tagGroup).apply();
 		} else {
             const channel = await SDK.channel
             const editor = await channel.editTags()
-			result = await channel.tags.remove(tag, tagGroup);
+			result = await editor.remove(tag, tagGroup).apply();
 		}
 	}
 	notifyResult(result);
 }
 
-function setTags() {
+async function setTags() {
+	let result = false;
 	const tagNU = document.getElementById("tagNU");
-
+	const tagGroup = document.getElementById("tag-group").value;
+	const tagString = document.getElementById("tag-name").value;
+	let tagArray = tagString.split(",");
+	const trimmedTagArray = tagArray.map((tag) => tag.trim());
 	if (tagNU.checked) {
-		// Add SDK codes to set tags on Named User
+        const contact = await SDK.contact
+        const editor = contact.editTags()
+		result = await editor.set(trimmedTagArray, tagGroup).apply()
 	} else {
-		// Add SDK codes to set tags on Channel
+        const channel = await SDK.channel
+        const editor = await channel.editTags()
+		result = await editor.set(trimmedTagArray, tagGroup).apply()
+        console.log(result)
 	}
+	notifyResult(result);
 }
 
 function setAttrs() {
