@@ -220,6 +220,13 @@ async function setAttrs() {
 	}
 }
 
+async function addListeners () {
+    const SDK = await UA
+    SDK.addEventListenr('channel', ev => {
+        console.log(ev)
+    }, {once: true})
+}
+
 function notifyResult(result) {
 	const tagForm = document.querySelector("#tags-form");
 	if (result == true) {
@@ -248,3 +255,5 @@ function notifyResult(result) {
 		}).showToast();
 	}
 }
+
+addListeners()
