@@ -206,10 +206,13 @@ async function setAttrs() {
 		}
 	}
 	if (attrNU.checked) {
-        console.log("HIIII")
         const contact = await SDK.contact
-		const editor = await contact.editAttributes()
-        const result = await editor.set(valueList).apply()
+		const editor = await contact.editAttributes().set("")
+        for(let key of Object.keys(valueList)){
+            editor.set(key, valueList.key)
+        }
+        await editor.apply()
+        // const result = await editor.set(valueList).apply()
 	} else {
         console.log("HELLLLO")
 		const channel = await SDK.channel
