@@ -206,8 +206,7 @@ async function setAttrs() {
 		}
 	}
 	if (attrNU.checked) {
-        const contact = await SDK.Contact
-        console.log(contact)
+        const contact = await SDK.contact
 		const editor = await contact.editAttributes()
         const result = await editor.set(valueList)
 	} else {
