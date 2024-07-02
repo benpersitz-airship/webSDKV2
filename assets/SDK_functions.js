@@ -207,17 +207,16 @@ async function setAttrs() {
 	}
 	if (attrNU.checked) {
         const contact = await SDK.contact
-		const editor = await contact.editAttributes().set("")
         for(let key of Object.keys(valueList)){
             editor.set(key, valueList[key])
         }
         await editor.apply()
-        // const result = await editor.set(valueList).apply()
 	} else {
-        console.log("HELLLLO")
-		const channel = await SDK.channel
-        const editor = await channel.editTags()
-        const result = await editor.set(valueList).apply()
+        const channel = await SDK.channel
+        for(let key of Object.keys(valueList)){
+            editor.set(key, valueList[key])
+        }
+        await editor.apply()
 	}
 }
 
