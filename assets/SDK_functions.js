@@ -132,11 +132,12 @@ async function addTags() {
 		if (tagNU.checked) {
             const contact = await SDK.contact
             const editor = contact.editTags()
-			result = await editor.add(tag, tagGroup).apply();
+			result = await editor.add(tagGroup,tag).apply();
 		} else {
             const channel = await SDK.channel
             const editor = channel.editTags()
-			result = await editor.add(tag, tagGroup).apply();
+			result = await editor.add(tagGroup,tag).apply();
+            console.log(result)
 		}
 	}
 	notifyResult(result);
@@ -154,11 +155,11 @@ async function removeTags() {
 		if (tagNU.checked) {
             const contact = await SDK.contact
             const editor = await contact.editTags()
-			result = await editor.remove(tag, tagGroup).apply();
+			result = await editor.remove(tagGroup, tag).apply();
 		} else {
             const channel = await SDK.channel
             const editor = await channel.editTags()
-			result = await editor.remove(tag, tagGroup).apply();
+			result = await editor.remove(tagGroup,tag).apply();
 		}
 	}
 	notifyResult(result);
@@ -174,11 +175,11 @@ async function setTags() {
 	if (tagNU.checked) {
         const contact = await SDK.contact
         const editor = contact.editTags()
-		result = await editor.set(trimmedTagArray, tagGroup).apply()
+		result = await editor.set(tagGroup,trimmedTagArray).apply()
 	} else {
         const channel = await SDK.channel
         const editor = await channel.editTags()
-		result = await editor.set(trimmedTagArray, tagGroup).apply()
+		result = await editor.set(tagGroup, trimmedTagArray).apply()
         console.log(result)
 	}
 	notifyResult(result);
