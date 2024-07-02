@@ -166,6 +166,7 @@ async function removeTags() {
 }
 
 async function setTags() {
+    const SDK = await UA
 	let result = false;
 	const tagNU = document.getElementById("tagNU");
 	const tagGroup = document.getElementById("tag-group").value;
