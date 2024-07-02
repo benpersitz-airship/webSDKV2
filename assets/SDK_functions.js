@@ -206,11 +206,15 @@ async function setAttrs() {
 		}
 	}
 	if (attrNU.checked) {
+        console.log("HIIII")
         const contact = await SDK.contact
 		const editor = await contact.editAttributes()
-        const result = await editor.set(valueList)
+        const result = await editor.set(valueList).apply()
 	} else {
-		// Add SDK codes to set attributes on Channel
+        console.log("HELLLLO")
+		const channel = await SDK.channel
+        const editor = await channel.editTags()
+        const result = await editor.set(valueList).apply()
 	}
 }
 
