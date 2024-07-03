@@ -96,7 +96,7 @@ async function associateNamedUser() {
 }
 
 async function addTags() {
-	let result = false;
+	let editor;
 	const tagNU = document.getElementById("tagNU");
 	const tagGroup = document.getElementById("tag-group").value;
 	const tagString = document.getElementById("tag-name").value;
@@ -106,14 +106,15 @@ async function addTags() {
 	for (let tag of tagArray) {
 		if (tagNU.checked) {
 			const contact = await SDK.contact;
-			const editor = contact.editTags();
-			result = await editor.add(tagGroup, tag).apply();
+			editor = contact.editTags();
+			result = await editor.add(tagGroup, tag)
 		} else {
 			const channel = await SDK.channel;
-			const editor = channel.editTags();
-			await editor.add(tagGroup, tag).apply();
+			editor = channel.editTags();
+			await editor.add(tagGroup, tag)
 		}
 	}
+    editor.apply()
 }
 
 async function removeTags() {
