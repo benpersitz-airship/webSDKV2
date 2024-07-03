@@ -182,6 +182,7 @@ async function setAttrs() {
 		for (let key of Object.keys(valueList)) {
 			editor.set(key, valueList[key]);
 		}
+        console.log(editor)
 		await editor.apply();
 	} else {
 		const channel = await SDK.channel;
@@ -189,6 +190,7 @@ async function setAttrs() {
 		for (let key of Object.keys(valueList)) {
 			editor.set(key, valueList[key]);
 		}
+        console.log(editor)
 		await editor.apply();
 	}
 }
