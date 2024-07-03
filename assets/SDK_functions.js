@@ -97,6 +97,13 @@ async function associateNamedUser() {
 
 async function addTags() {
 	let editor;
+	if (tagNU.checked) {
+		const contact = await SDK.contact;
+		editor = await contact.editTags();
+	} else {
+		const channel = await SDK.channel;
+		editor = await channel.editTags();
+	}
 	const tagNU = document.getElementById("tagNU");
 	const tagGroup = document.getElementById("tag-group").value;
 	const tagString = document.getElementById("tag-name").value;
@@ -104,41 +111,32 @@ async function addTags() {
 	tagArray = tagArray.map((tag) => tag.trim());
 	const SDK = await UA;
 	for (let tag of tagArray) {
-		if (tagNU.checked) {
-			const contact = await SDK.contact;
-			editor = contact.editTags();
-			editor.add(tagGroup, tag)
-            console.log(editor, tag)
-		} else {
-			const channel = await SDK.channel;
-			editor = channel.editTags();
-			editor.add(tagGroup, tag)
-		}
+		editor.add(tagGroup, tag);
+		console.log(editor, tag);
 	}
-    console.log(editor)
-    await editor.apply()
+	console.log(editor);
+	await editor.apply();
 }
 
 async function removeTags() {
 	const tagNU = document.getElementById("tagNU");
-    let editor;
+	let editor;
+	if (tagNU.checked) {
+		const contact = await SDK.contact;
+		editor = await contact.editTags();
+	} else {
+		const channel = await SDK.channel;
+		editor = await channel.editTags();
+	}
 	const tagGroup = document.getElementById("tag-group").value;
 	const tagString = document.getElementById("tag-name").value;
 	let tagArray = tagString.split(",");
 	tagArray = tagArray.map((tag) => tag.trim());
-	const SDK = await coUA;
+	const SDK = await UA;
 	for (let tag of tagArray) {
-		if (tagNU.checked) {
-			const contact = await SDK.contact;
-			editor = await contact.editTags();
-            editor.remove(tagGroup, tag)
-		} else {
-			const channel = await SDK.channel;
-			editor = await channel.editTags();
-            editor.remove(tagGroup, tag)
-		}
+		editor.remove(tagGroup, tag);
 	}
-    await editor.apply()
+	await editor.apply();
 }
 
 async function setTags() {
@@ -151,7 +149,7 @@ async function setTags() {
 	if (tagNU.checked) {
 		const contact = await SDK.contact;
 		const editor = contact.editTags();
-        await editor.set(tagGroup, trimmedTagArray).apply();
+		await editor.set(tagGroup, trimmedTagArray).apply();
 	} else {
 		const channel = await SDK.channel;
 		const editor = await channel.editTags();
@@ -184,7 +182,7 @@ async function setAttrs() {
 		for (let key of Object.keys(valueList)) {
 			editor.set(key, valueList[key]);
 		}
-        console.log(editor)
+		console.log(editor);
 		await editor.apply();
 	} else {
 		const channel = await SDK.channel;
@@ -192,7 +190,7 @@ async function setAttrs() {
 		for (let key of Object.keys(valueList)) {
 			editor.set(key, valueList[key]);
 		}
-        console.log(editor)
+		console.log(editor);
 		await editor.apply();
 	}
 }
