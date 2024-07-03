@@ -107,36 +107,38 @@ async function addTags() {
 		if (tagNU.checked) {
 			const contact = await SDK.contact;
 			editor = contact.editTags();
-			result = await editor.add(tagGroup, tag)
+			editor.add(tagGroup, tag)
             console.log(editor, tag)
 		} else {
 			const channel = await SDK.channel;
 			editor = channel.editTags();
-			await editor.add(tagGroup, tag)
+			editor.add(tagGroup, tag)
 		}
 	}
     console.log(editor)
-    editor.apply()
+    await editor.apply()
 }
 
 async function removeTags() {
 	const tagNU = document.getElementById("tagNU");
+    let editor;
 	const tagGroup = document.getElementById("tag-group").value;
 	const tagString = document.getElementById("tag-name").value;
 	let tagArray = tagString.split(",");
 	tagArray = tagArray.map((tag) => tag.trim());
-	const SDK = await UA;
+	const SDK = await coUA;
 	for (let tag of tagArray) {
 		if (tagNU.checked) {
 			const contact = await SDK.contact;
-			const editor = await contact.editTags();
-            await editor.remove(tagGroup, tag).apply()
+			editor = await contact.editTags();
+            editor.remove(tagGroup, tag)
 		} else {
 			const channel = await SDK.channel;
-			const editor = await channel.editTags();
-            await editor.remove(tagGroup, tag).apply()
+			editor = await channel.editTags();
+            editor.remove(tagGroup, tag)
 		}
 	}
+    await editor.apply()
 }
 
 async function setTags() {
