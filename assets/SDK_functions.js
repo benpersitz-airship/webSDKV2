@@ -108,6 +108,7 @@ async function addTags() {
 			const contact = await SDK.contact;
 			editor = contact.editTags();
 			result = await editor.add(tagGroup, tag)
+            console.log(editor, tag)
 		} else {
 			const channel = await SDK.channel;
 			editor = channel.editTags();
