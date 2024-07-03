@@ -2,41 +2,13 @@
 
 // Log who you are in the console
 async function whoAmI() {
-    const sdk = await UA
-	const channel = await sdk.channel.id()
-    console.log(channel)
+	const sdk = await UA;
+	const channel = await sdk.channel.id();
+	console.log(channel);
 }
 
-
-
 async function promptRegistration() {
-    const sdk = await UA
-	// UA.then((sdk) => {
-	// 	sdk.plugins
-	// 		.load(
-	// 			"html-prompt",
-	// 			"https://aswpsdkus.com/notify/v2/ua-html-prompt.min.js",
-	// 			{
-	// 				appearDelay: 0,
-	// 				askAgainDelay: 0,
-	// 				type: "alert",
-	// 				position: "top",
-	// 				i18n: {
-	// 					en: {
-	// 						title: "Lets keep in touch",
-	// 						message:
-	// 							"Make sure you stay up to date with everything Airship SDK. Subscribe to notifications. We send about one per week.",
-	// 						accept: "Sign up now",
-	// 						deny: "So you're saying there's a chance.."
-	// 					}
-	// 				}
-	// 			}
-	// 		)
-	// 		.then((plugin) => {
-	// 			plugin.prompt();
-	// 		})
-	//     });
-	;
+	const sdk = await UA;
 	const plugin = await sdk.plugins.load(
 		"html-prompt",
 		"https://aswpsdkus.com/notify/v2/ua-html-prompt.min.js",
@@ -60,8 +32,8 @@ async function promptRegistration() {
 }
 
 async function prompt_sms_form() {
-    const sdk = await UA
-    let options = {
+	const sdk = await UA;
+	let options = {
 		platform: "sms",
 		// automatic: {
 		// 	askAgainDelay: 0
@@ -78,16 +50,17 @@ async function prompt_sms_form() {
 		senderId: "63706",
 		country: "US"
 	};
-    
-    const plugin = await sdk.plugins.load("subscription-form", "https://aswpsdkus.com/notify/v2/ua-subscription-form.min.js")
-    form = plugin.setupModalForm(options)
-    form.open()
 
-    // })
+	const plugin = await sdk.plugins.load(
+		"subscription-form",
+		"https://aswpsdkus.com/notify/v2/ua-subscription-form.min.js"
+	);
+	form = plugin.setupModalForm(options);
+	form.open();
 }
 
 async function prompt_email_form() {
-    const sdk = await UA
+	const sdk = await UA;
 	let options = {
 		platform: "email",
 		size: "large",
@@ -106,18 +79,20 @@ async function prompt_email_form() {
 		senderId: "63706",
 		country: "US"
 	};
-    
-    const plugin = await sdk.plugins.load("subscription-form", "https://aswpsdkus.com/notify/v2/ua-subscription-form.min.js")
-    form = plugin.setupModalForm(options)
-    form.open()
+
+	const plugin = await sdk.plugins.load(
+		"subscription-form",
+		"https://aswpsdkus.com/notify/v2/ua-subscription-form.min.js"
+	);
+	form = plugin.setupModalForm(options);
+	form.open();
 }
 
 async function associateNamedUser() {
-    const sdk = await UA
-    const nuValue = document.querySelector("#nuid").value
-    const contact = await sdk.contact
-    const result = await contact.identify(nuValue)
-    notifyResult(result)
+	const sdk = await UA;
+	const nuValue = document.querySelector("#nuid").value;
+	const contact = await sdk.contact;
+	const result = await contact.identify(nuValue);
 }
 
 async function addTags() {
@@ -130,21 +105,18 @@ async function addTags() {
 	const SDK = await UA;
 	for (let tag of tagArray) {
 		if (tagNU.checked) {
-            const contact = await SDK.contact
-            const editor = contact.editTags()
-			result = await editor.add(tagGroup,tag).apply();
+			const contact = await SDK.contact;
+			const editor = contact.editTags();
+			result = await editor.add(tagGroup, tag).apply();
 		} else {
-            const channel = await SDK.channel
-            const editor = channel.editTags()
-			result = await editor.add(tagGroup,tag).apply();
-            console.log(result)
+			const channel = await SDK.channel;
+			const editor = channel.editTags();
+			await editor.add(tagGroup, tag).apply();
 		}
 	}
-	notifyResult(result);
 }
 
 async function removeTags() {
-	let result = false;
 	const tagNU = document.getElementById("tagNU");
 	const tagGroup = document.getElementById("tag-group").value;
 	const tagString = document.getElementById("tag-name").value;
@@ -153,42 +125,38 @@ async function removeTags() {
 	const SDK = await UA;
 	for (let tag of tagArray) {
 		if (tagNU.checked) {
-            const contact = await SDK.contact
-            const editor = await contact.editTags()
-			result = await editor.remove(tagGroup, tag).apply();
+			const contact = await SDK.contact;
+			const editor = await contact.editTags();
+            await editor.remove(tagGroup, tag).apply()
 		} else {
-            const channel = await SDK.channel
-            const editor = await channel.editTags()
-			result = await editor.remove(tagGroup,tag).apply();
+			const channel = await SDK.channel;
+			const editor = await channel.editTags();
+            await editor.remove(tagGroup, tag).apply()
 		}
 	}
-	notifyResult(result);
 }
 
 async function setTags() {
-    const SDK = await UA
-	let result = false;
+	const SDK = await UA;
 	const tagNU = document.getElementById("tagNU");
 	const tagGroup = document.getElementById("tag-group").value;
 	const tagString = document.getElementById("tag-name").value;
 	let tagArray = tagString.split(",");
 	const trimmedTagArray = tagArray.map((tag) => tag.trim());
 	if (tagNU.checked) {
-        const contact = await SDK.contact
-        const editor = contact.editTags()
-		result = await editor.set(tagGroup,trimmedTagArray).apply()
+		const contact = await SDK.contact;
+		const editor = contact.editTags();
+        await editor.set(tagGroup, trimmedTagArray).apply();
 	} else {
-        const channel = await SDK.channel
-        const editor = await channel.editTags()
-		result = await editor.set(tagGroup, trimmedTagArray).apply()
-        console.log(result)
+		const channel = await SDK.channel;
+		const editor = await channel.editTags();
+		await editor.set(tagGroup, trimmedTagArray).apply();
 	}
-	notifyResult(result);
 }
 
 async function setAttrs() {
 	const attrNU = document.getElementById("attrNU");
-    const attrForm = document.querySelector("#attr-form");
+	const attrForm = document.querySelector("#attr-form");
 	const SDK = await UA;
 	const fnValue = document.querySelector("#first_name").value;
 	const lnValue = document.querySelector("#last_name").value;
@@ -206,56 +174,18 @@ async function setAttrs() {
 		}
 	}
 	if (attrNU.checked) {
-        const contact = await SDK.contact
-        const editor = await contact.editAttributes()
-        for(let key of Object.keys(valueList)){
-            editor.set(key, valueList[key])
-        }
-        await editor.apply()
+		const contact = await SDK.contact;
+		const editor = await contact.editAttributes();
+		for (let key of Object.keys(valueList)) {
+			editor.set(key, valueList[key]);
+		}
+		await editor.apply();
 	} else {
-        const channel = await SDK.channel
-        const editor = await channel.editAttributes()
-        for(let key of Object.keys(valueList)){
-            editor.set(key, valueList[key])
-        }
-        await editor.apply()
+		const channel = await SDK.channel;
+		const editor = await channel.editAttributes();
+		for (let key of Object.keys(valueList)) {
+			editor.set(key, valueList[key]);
+		}
+		await editor.apply();
 	}
 }
-
-async function addListeners () {
-    const SDK = await UA
-    SDK.addEventListener('channel', ev => {
-        console.log(ev)
-    })
-}
-
-function notifyResult(result) {
-	const tagForm = document.querySelector("#tags-form");
-	if (result == true) {
-		console.log("tag operation completed successfully");
-		Toastify({
-			text: "Tag operation completed successfully",
-			duration: 5000,
-			className: "success-toast",
-			position: "center",
-			close: true,
-			style: {
-				background: "green"
-			}
-		}).showToast();
-		tagForm.reset();
-	} else {
-		Toastify({
-			text: "Error completing the tag operation",
-			duration: 5000,
-			className: "error-toast",
-			position: "center",
-			close: true,
-			style: {
-				background: "red"
-			}
-		}).showToast();
-	}
-}
-
-addListeners()
