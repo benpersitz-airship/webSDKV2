@@ -97,6 +97,7 @@ async function associateNamedUser() {
 
 async function addTags() {
     const tagNU = document.getElementById("tagNU");
+    const SDK = await UA;
 	let editor;
 	if (tagNU.checked) {
 		const contact = await SDK.contact;
@@ -109,7 +110,6 @@ async function addTags() {
 	const tagString = document.getElementById("tag-name").value;
 	let tagArray = tagString.split(",");
 	tagArray = tagArray.map((tag) => tag.trim());
-	const SDK = await UA;
 	for (let tag of tagArray) {
 		editor.add(tagGroup, tag);
 		console.log(editor, tag);
@@ -120,6 +120,7 @@ async function addTags() {
 
 async function removeTags() {
 	const tagNU = document.getElementById("tagNU");
+    const SDK = await UA;
 	let editor;
 	if (tagNU.checked) {
 		const contact = await SDK.contact;
@@ -132,7 +133,6 @@ async function removeTags() {
 	const tagString = document.getElementById("tag-name").value;
 	let tagArray = tagString.split(",");
 	tagArray = tagArray.map((tag) => tag.trim());
-	const SDK = await UA;
 	for (let tag of tagArray) {
 		editor.remove(tagGroup, tag);
 	}
