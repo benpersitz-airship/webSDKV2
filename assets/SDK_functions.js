@@ -114,6 +114,7 @@ async function addTags() {
 			await editor.add(tagGroup, tag)
 		}
 	}
+    console.log(editor)
     editor.apply()
 }
 
