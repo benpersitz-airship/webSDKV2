@@ -96,6 +96,7 @@ async function associateNamedUser() {
 }
 
 async function addTags() {
+    const tagNU = document.getElementById("tagNU");
 	let editor;
 	if (tagNU.checked) {
 		const contact = await SDK.contact;
@@ -104,7 +105,6 @@ async function addTags() {
 		const channel = await SDK.channel;
 		editor = await channel.editTags();
 	}
-	const tagNU = document.getElementById("tagNU");
 	const tagGroup = document.getElementById("tag-group").value;
 	const tagString = document.getElementById("tag-name").value;
 	let tagArray = tagString.split(",");
