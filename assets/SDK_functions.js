@@ -207,12 +207,14 @@ async function setAttrs() {
 	}
 	if (attrNU.checked) {
         const contact = await SDK.contact
+        const editor = await contact.editAttributes()
         for(let key of Object.keys(valueList)){
             editor.set(key, valueList[key])
         }
         await editor.apply()
 	} else {
         const channel = await SDK.channel
+        const editor = await channel.editAttributes()
         for(let key of Object.keys(valueList)){
             editor.set(key, valueList[key])
         }
@@ -224,7 +226,7 @@ async function addListeners () {
     const SDK = await UA
     SDK.addEventListener('channel', ev => {
         console.log(ev)
-    }, {once: true})
+    })
 }
 
 function notifyResult(result) {
