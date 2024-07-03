@@ -222,7 +222,7 @@ async function setAttrs() {
 
 async function addListeners () {
     const SDK = await UA
-    SDK.addEventListenr('channel', ev => {
+    SDK.addEventListener('channel', ev => {
         console.log(ev)
     }, {once: true})
 }
