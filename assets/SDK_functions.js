@@ -96,7 +96,7 @@ async function associateNamedUser() {
 }
 
 async function addTags() {
-	let result = false;
+	let editor = false;
 	const tagNU = document.getElementById("tagNU");
 	const tagGroup = document.getElementById("tag-group").value;
 	const tagString = document.getElementById("tag-name").value;
