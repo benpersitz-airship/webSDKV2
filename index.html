@@ -6,22 +6,6 @@
   	<meta name="description" content="Helping brands master Mobile App Experiences (MAX) to engage customers and win their loyalty. Learn more.">
   	<title>Airship Demo Site</title>
     <link rel="stylesheet" type="text/css" href="assets/styles.css" />
-    <script type="text/javascript">
-      // 86acbd31cd7c09cf30acb66d2fbedc91daa48b86:1715970619.5832934
-      !function(n,r,e,t,c){var i,o="Promise"in n,u={then:function(){return u},catch:function(n){
-      return n(new Error("Airship SDK Error: Unsupported browser")),u}},s=o?new Promise((function(n,r){i=function(e,t){e?r(e):n(t)}})):u
-      ;s._async_setup=function(n){if(o)try{i(null,n(c))}catch(n){i(n)}},n[t]=s;var a=r.createElement("script");a.src=e,a.async=!0,a.id="_uasdk",
-      a.rel=t,r.head.appendChild(a)}(window,document,'https://aswpsdkus.com/notify/v2/ua-sdk.min.js',
-        'UA', {
-          vapidPublicKey: 'BGoaq6OB072RABcfTdWex-Cg60IBjDT9kJPGWGB6jrzSYgY6T-B6TEC3PKnlpbVXALnijOMMoKfz6lWvqiPIgeI=',
-          
-          
-          appKey: 'G0MM8eAYR92mbaosIHxz6g',
-          token: 'MTpHME1NOGVBWVI5Mm1iYW9zSUh4ejZnOnBhMlpOaWdfTGRpS3RQel9yR0RTQ29LVWR3RFg2VlJNVVV5alprR2dqTEE'
-        });
-      
-      </script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="assets/SDK_functions.js"></script>
   </head>
   <body>
@@ -29,6 +13,9 @@
       <div class="flex">
         <div class="menu">
           <a href="#registration" class="ease">Registration</a>
+        </div>
+        <div class="menu">
+          <a href="#webPushOptin" class="ease">Web Push Opt-in</a>
         </div>
         <div class="menu">
           <a href="#optin-forms" class="ease">Opt-in Forms</a>
@@ -59,8 +46,29 @@
       <div class="sdk-section">
   <!-- REGISTRATION -->
         <div class="action-box" id="registration">
-          <h3>User Registration</h3>
-          <p>A user is registered when they opt in to receiving notifications via the system dialog, which varies slightly from browser to browser. The dialog is presented when the page invokes the <code>sdk.register()</code> function.</p>
+          <h3>Channel Registraion</h3>
+          <p>To use the new features of the v2 Web SDK, you will need to register a channel for browsers that visit your web site. Channel registration no longer requires push notification opt-in. When you choose to do this will be up to your integration, but Airship recommends registering a channel only once a visitor is considered relevant to you.</p>
+          <p>Airship provides two ways to register a new user:</p>
+          <ul>
+            <li><a href="https://docs.airship.com/reference/libraries/web-notify-sdk/v2-latest/UaSDK.html#create" target="_blank">UaSDK.create</a>: Creates a channel without prompting for notification opt-in.</li>
+            <li><a href="https://docs.airship.com/reference/libraries/web-notify-sdk/v2-latest/UaSDK.html#register" target="_blank">UaSDK.register</a>: Creates a channel, prompting for notification opt-in. If the user denies notification permissions, has previously denied it, or if the browser is in an unsupported context this method will throw an error, and not register a channel.</li>
+          </ul>
+          <p>You may decide to register that channel for push notifications at a later date using the <code>register()</code> method, as usual. Note that if you are calling <code>register()</code> you do not need to also call <code>create()</code>.</p>
+          <div class="note">
+            <header class="note-note ease">
+              NOTE
+            </header>
+            <p>Any visitor you choose to register will impact your Monthly Unique Visitors (MUV).</p>
+          </div>
+          <hr>
+          <div class="actions buttons">
+            <button type="button" name="register-channel" id="register-channel" class="btn ease" onclick="createChannel();">Register Channel</button>
+          </div>
+        </div>
+  <!-- WEB PUSH OPT-IN -->
+        <div class="action-box" id="webPushOptin">
+          <h3>Web Push Opt-in</h3>
+          <p>If not using the <code>create()</code> method and instead using the <code>register()</code> method, a user is registered when they opt in to receiving notifications via the system dialog, which varies slightly from browser to browser. The dialog is presented when the page invokes the <code>sdk.register()</code> function.</p>
           <div class="note">
             <header class="note-best-practice ease">
               Best Practice
@@ -77,7 +85,7 @@
             <li><b>Uninstalled:</b> A user is considered to be Uninstalled if they have both: Opted out via the browser settings, AND not returned to the website.</li>
           </ul>
           <hr>
-          <h3>HTML Prompts Are Awesome</h3>
+          <h3>HTML Prompt</h3>
           <p>
             Allow users to express their interest in notifications prior to registration. It is a best practice to explain the value of your notifications before prompting the opt-in flow. Using a soft prompt also gives users the chance to politely decline for now, without setting the browser permission to denied, giving you the chance to request again at a later time.
           </p>
@@ -88,7 +96,7 @@
           </ul>
           <hr>
           <div class="actions buttons">
-            <button type="button" name="prompt" id="prompt" class="btn ease" onclick="prompt_registration();">Prompt Registration</button>
+            <button type="button" name="prompt" id="prompt" class="btn ease" onclick="promptWebPush();">Web Push Prompt</button>
           </div>
         </div>
 
@@ -116,11 +124,18 @@
             </header>
             <p>The suggested opt-in text and the design and usage guidelines provided in the Documentation are not intended to be legal advice. The suggested text should not be used “as is”, and is instead an example of what may meet opt-in standards or requirements. Please consult your legal counsel before implementing particular language for your campaigns to address your specific use case or regulatory requirements in your jurisdiction.</p>
           </div>
-          <div rel="sms-opt-in"></div>
           <hr>
           <div class="actions buttons">
-            <button type="button" name="prompt_sms" id="prompt_sms" class="btn ease" onclick="prompt_sms_form();">SMS Form</button>
-            <button type="button" name="prompt_email" id="prompt_email" class="btn ease" onclick="prompt_email_form();">Email Form</button>
+            <button type="button" name="prompt_sms" id="prompt_sms" class="btn ease" onclick="promptSmsForm();">SMS Form</button>
+            <button type="button" name="prompt_email" id="prompt_email" class="btn ease" onclick="promptEmailForm();">Email Form</button>
+          </div>
+          <div class="embedded-forms">
+            <div id="sms_embedded" class="embedded-opt">
+              <div rel="sms-opt-in" class="opt-in-forms"></div>
+            </div>
+            <div id="email_embedded" class="embedded-opt">
+              <div rel="email-opt-in" class="opt-in-forms"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -191,7 +206,7 @@
             </div>
             <div class="onNUID">
               <input type="checkbox" id="tagNU" name="tagNU" value="tagNU">
-              <label for="user-level"> on Named User</label>
+              <label for="tagNU"> on Named User</label>
             </div>
           </form>
         </div>
@@ -284,23 +299,19 @@
           <hr>
           <form id="attr-form" class="actions">
             <div class="form-block">
-              <label for="attr-id">First Name:</label>
-              <input type="text" id="first_name" name="first_name" placeholder="first_name" class="attr-inputs">
+              <label for="attr-id">Attribute ID:</label>
+              <input type="text" id="attr-id" name="attr-id" placeholder="first_name" class="attr-inputs">
             </div>
             <div class="form-block">
-              <label for="attr-name">Last Name:</label>
-              <input type="text" id="last_name" name="last_name" placeholder="last_name" class="attr-inputs">
-            </div>
-            <div class="form-block">
-              <label for="attr-name">Loyalty Tier:</label>
-              <input type="text" id="loyalty_tier" name="loyalty_tier" placeholder="loyalty_tier" class="attr-inputs">
+              <label for="attr-name">Attribute Value:</label>
+              <input type="text" id="attr-name" name="attr-name" placeholder="Björk" class="attr-inputs">
             </div>
             <div class="form-block">
               <button type="button" name="addAttr" class="btn ease add" id="attr-add" onclick="setAttrs();">Add</button>
             </div>
             <div class="onNUID">
               <input type="checkbox" id="attrNU" name="attrNU" value="attrNU">
-              <label for="user-level"> on Named User</label>
+              <label for="attrNU"> on Named User</label>
             </div>
           </form>
         </div>
@@ -308,7 +319,7 @@
 
     </main>
 
-    <footer class="main-site-footer">
+    <footer class="main-footer">
       <div class="footer-company-info-wrapper">
         <a href="https://www.airship.com/" target="_blank"><img class="footer-company-logo" src="https://www.airship.com/wp-content/uploads/2023/05/brand-airship-dark.svg"></a>
       </div>
@@ -336,6 +347,5 @@
       </div>
     </footer>
     <script src="assets/site_functions.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   </body>
 </html>
