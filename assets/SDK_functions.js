@@ -1,13 +1,22 @@
 // SDK CODES
 
-// Log who you are in the console
 async function whoAmI() {
-	const sdk = await UA;
-	const channel = await sdk.channel.id();
-	console.log(channel);
-}
+    const sdk = await UA;
+    const channelId = await sdk.channel.id()
+    const optInStatus = await sdk.channel.optedIn()
+    let user = {
+      channel_id: channelId,
+      optin_status: optInStatus
+    }
+    console.log(user);
+  }
+  
+  async function createChannel() {
+    // Add SDK codes to register a channel WITHOUT prompting to web push opt-in
+  }
+  
 
-async function promptRegistration() {
+async function promptWebPush() {
 	const sdk = await UA;
 	const plugin = await sdk.plugins.load(
 		"html-prompt",
@@ -31,7 +40,7 @@ async function promptRegistration() {
 	plugin.prompt();
 }
 
-async function prompt_sms_form() {
+async function promptSmsForm() {
 	const sdk = await UA;
 	let options = {
 		platform: "sms",
@@ -59,7 +68,11 @@ async function prompt_sms_form() {
 	form.open();
 }
 
-async function prompt_email_form() {
+async function smsEmbeddedForm() {
+    // Add SDK codes to handle embedded SMS sign-up form
+  }
+
+async function promptEmailForm() {
 	const sdk = await UA;
 	let options = {
 		platform: "email",
@@ -88,11 +101,16 @@ async function prompt_email_form() {
 	form.open();
 }
 
+async function emailEmbeddedForm() {
+    // Add SDK codes to handle embedded Email sign-up form
+  }
+  
+
 async function associateNamedUser() {
 	const sdk = await UA;
 	const nuValue = document.querySelector("#nuid").value;
 	const contact = await sdk.contact;
-	const result = await contact.identify(nuValue);
+	await contact.identify(nuValue);
 }
 
 async function addTags() {
@@ -112,9 +130,7 @@ async function addTags() {
 	tagArray = tagArray.map((tag) => tag.trim());
 	for (let tag of tagArray) {
 		editor.add(tagGroup, tag);
-		console.log(editor, tag);
 	}
-	console.log(editor);
 	await editor.apply();
 }
 
@@ -161,36 +177,17 @@ async function setAttrs() {
 	const attrNU = document.getElementById("attrNU");
 	const attrForm = document.querySelector("#attr-form");
 	const SDK = await UA;
-	const fnValue = document.querySelector("#first_name").value;
-	const lnValue = document.querySelector("#last_name").value;
-	const tierValue = document.querySelector("#loyalty_tier").value;
-	let valueList = {
-		first_name: fnValue,
-		last_name: lnValue,
-		loyalty_tier: tierValue
-	};
-	for (let value of Object.keys(valueList)) {
-		if (valueList[value] == "") {
-			delete valueList[value];
-		} else if (valueList[value] == "null") {
-			valueList[value] = "";
-		}
-	}
+	const value = document.querySelector("#attr-name").value;
+	const id = document.querySelector("#attr-id").value;
 	if (attrNU.checked) {
 		const contact = await SDK.contact;
 		const editor = await contact.editAttributes();
-		for (let key of Object.keys(valueList)) {
-			editor.set(key, valueList[key]);
-		}
-		console.log(editor);
+		editor.set(id,value)
 		await editor.apply();
 	} else {
 		const channel = await SDK.channel;
 		const editor = await channel.editAttributes();
-		for (let key of Object.keys(valueList)) {
-			editor.set(key, valueList[key]);
-		}
-		console.log(editor);
+        editor.set(id,value)
 		await editor.apply();
 	}
 }

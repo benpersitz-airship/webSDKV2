@@ -1,5 +1,5 @@
 // mobile navbar
-  function main(){
+function main(){
     var menuIconOpen = document.getElementsByClassName("open")[0];
     var menuIconClose = document.getElementsByClassName("close")[0];
     var menuItems = document.getElementsByClassName("menu");
@@ -31,7 +31,9 @@
     }
   }
 
-  window.onload = async function(){
+  window.addEventListener("load", (event) => {
     main();
-    console.log('Ran this demo before? You may need to update or clear your browser settings to retrigger the prompt');
-  }
+    smsEmbeddedForm();
+    emailEmbeddedForm();
+    console.log('Have you registered or declined notifications from this site yet? \n \nYou may need to update your browser settings to retrigger the prompt');
+  })
