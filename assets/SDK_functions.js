@@ -1,4 +1,4 @@
-// SDK CODES
+// sdk CODES
 
 async function whoAmI() {
     const sdk = await UA;
@@ -12,7 +12,9 @@ async function whoAmI() {
   }
   
   async function createChannel() {
-    // Add SDK codes to register a channel WITHOUT prompting to web push opt-in
+    const sdk = await UA
+    const result = await sdk.register()
+    console.log(`Channel created successfully. Your channel ID is: ${result['channelId']}`)
   }
   
 
@@ -30,7 +32,7 @@ async function promptWebPush() {
 				en: {
 					title: "Lets keep in touch",
 					message:
-						"Make sure you stay up to date with everything Airship SDK. Subscribe to notifications. We send about one per week.",
+						"Make sure you stay up to date with everything Airship sdk. Subscribe to notifications. We send about one per week.",
 					accept: "Sign up now",
 					deny: "So you're saying there's a chance.."
 				}
@@ -69,7 +71,24 @@ async function promptSmsForm() {
 }
 
 async function smsEmbeddedForm() {
-    // Add SDK codes to handle embedded SMS sign-up form
+    const embedTarget = document.querySelector("#sms_embedded")
+    let options ={
+        platform: "sms",
+		i18n: {
+			en: {
+				terms: "These are terms that you agree to.",
+				footer: "This here be a footer",
+				placeholderMsisdn: "1360-867-5309",
+				submitButton: "Receive Texts",
+				invalidMsisdn: "Whoops, that number wasn't valid. Please try again"
+			}
+		},
+		senderId: "63706",
+		country: "US"
+    }
+    const sdk = await UA
+    const plugin = sdk.plugions.load("subscription-form", "https://aswpsdkus.com/notify/v2/ua-subscription-form.min.js")
+    plugin.embedForm(embedTarget, options)
   }
 
 async function promptEmailForm() {
@@ -102,7 +121,28 @@ async function promptEmailForm() {
 }
 
 async function emailEmbeddedForm() {
-    // Add SDK codes to handle embedded Email sign-up form
+    const sdk = await UA;
+	let options = {
+		platform: "email",
+		size: "large",
+		i18n: {
+			en: {
+				terms: "These are terms that you agree to.",
+				footer: "This here be a footer",
+				placeholderEmail: "support@airship.com",
+				submitButton: "Receive Emails",
+				invalidEmail: "Whoops, that email wasn't valid. Please try again"
+			}
+		},
+		senderId: "63706",
+		country: "US"
+	};
+
+	const plugin = await sdk.plugins.load(
+		"subscription-form",
+		"https://aswpsdkus.com/notify/v2/ua-subscription-form.min.js"
+	);
+    plugin.embedForm(embedTarget, options)
   }
   
 
@@ -115,13 +155,13 @@ async function associateNamedUser() {
 
 async function addTags() {
     const tagNU = document.getElementById("tagNU");
-    const SDK = await UA;
+    const sdk = await UA;
 	let editor;
 	if (tagNU.checked) {
-		const contact = await SDK.contact;
+		const contact = await sdk.contact;
 		editor = await contact.editTags();
 	} else {
-		const channel = await SDK.channel;
+		const channel = await sdk.channel;
 		editor = await channel.editTags();
 	}
 	const tagGroup = document.getElementById("tag-group").value;
@@ -136,13 +176,13 @@ async function addTags() {
 
 async function removeTags() {
 	const tagNU = document.getElementById("tagNU");
-    const SDK = await UA;
+    const sdk = await UA;
 	let editor;
 	if (tagNU.checked) {
-		const contact = await SDK.contact;
+		const contact = await sdk.contact;
 		editor = await contact.editTags();
 	} else {
-		const channel = await SDK.channel;
+		const channel = await sdk.channel;
 		editor = await channel.editTags();
 	}
 	const tagGroup = document.getElementById("tag-group").value;
@@ -156,18 +196,18 @@ async function removeTags() {
 }
 
 async function setTags() {
-	const SDK = await UA;
+	const sdk = await UA;
 	const tagNU = document.getElementById("tagNU");
 	const tagGroup = document.getElementById("tag-group").value;
 	const tagString = document.getElementById("tag-name").value;
 	let tagArray = tagString.split(",");
 	const trimmedTagArray = tagArray.map((tag) => tag.trim());
 	if (tagNU.checked) {
-		const contact = await SDK.contact;
+		const contact = await sdk.contact;
 		const editor = contact.editTags();
 		await editor.set(tagGroup, trimmedTagArray).apply();
 	} else {
-		const channel = await SDK.channel;
+		const channel = await sdk.channel;
 		const editor = await channel.editTags();
 		await editor.set(tagGroup, trimmedTagArray).apply();
 	}
@@ -176,16 +216,16 @@ async function setTags() {
 async function setAttrs() {
 	const attrNU = document.getElementById("attrNU");
 	const attrForm = document.querySelector("#attr-form");
-	const SDK = await UA;
+	const sdk = await UA;
 	const value = document.querySelector("#attr-name").value;
 	const id = document.querySelector("#attr-id").value;
 	if (attrNU.checked) {
-		const contact = await SDK.contact;
+		const contact = await sdk.contact;
 		const editor = await contact.editAttributes();
 		editor.set(id,value)
 		await editor.apply();
 	} else {
-		const channel = await SDK.channel;
+		const channel = await sdk.channel;
 		const editor = await channel.editAttributes();
         editor.set(id,value)
 		await editor.apply();
