@@ -87,7 +87,7 @@ async function smsEmbeddedForm() {
 		country: "US"
     }
     const sdk = await UA
-    const plugin = sdk.plugions.load("subscription-form", "https://aswpsdkus.com/notify/v2/ua-subscription-form.min.js")
+    const plugin = await sdk.plugins.load("subscription-form", "https://aswpsdkus.com/notify/v2/ua-subscription-form.min.js")
     plugin.embedForm(embedTarget, options)
   }
 
@@ -121,6 +121,7 @@ async function promptEmailForm() {
 }
 
 async function emailEmbeddedForm() {
+    const embedTarget = document.querySelector("#email_embedded")
     const sdk = await UA;
 	let options = {
 		platform: "email",
