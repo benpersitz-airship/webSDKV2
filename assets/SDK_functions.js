@@ -13,7 +13,7 @@ async function whoAmI() {
   
   async function createChannel() {
     const sdk = await UA
-    const result = await sdk.register()
+    const result = await sdk.create()
     console.log(`Channel created successfully. Your channel ID is: ${result['channelId']}`)
   }
   
