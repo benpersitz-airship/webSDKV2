@@ -74,6 +74,7 @@ async function smsEmbeddedForm() {
     const embedTarget = document.querySelector("#sms_embedded")
     let options ={
         platform: "sms",
+        size: "large",  
 		i18n: {
 			en: {
 				terms: "These are terms that you agree to.",
