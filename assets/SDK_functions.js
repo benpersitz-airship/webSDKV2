@@ -233,3 +233,11 @@ async function setAttrs() {
 		await editor.apply();
 	}
 }
+
+async function createCustomEvent(){
+    const eventName = document.querySelector('#customEvent').value
+    const sdk = await UA
+    const event = new sdk.CustomEvent(eventName)
+    console.log(event)
+    await event.track()
+}

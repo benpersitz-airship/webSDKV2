@@ -340,7 +340,7 @@
     background-position: left center;
     background-repeat: no-repeat;
   }
-  #nuid-form {
+  #nuid-form, #ceForm {
     text-align: right;
   }
   .form-block {
@@ -422,10 +422,10 @@
     .buttons {
       text-align: center;
     }
-    #nuid-form {
+    #nuid-form, #ceForm {
       text-align: left;
     }
-    #nuid-form input[type=text] {
+    #nuid-form input[type=text], #ceForm input[type=text] {
       width: 100%;
       box-sizing: border-box;
     }
