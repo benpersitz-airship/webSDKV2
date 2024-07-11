@@ -235,9 +235,18 @@ async function setAttrs() {
 }
 
 async function createCustomEvent(){
+    let eventProperties;
+    const propertiesIncluded = document.querySelector("#propertyToggle").checked
+    if(propertiesIncluded){
+        const key = document.querySelector('#propertyKey').value
+        const value = document.querySelector('#propertyValue').value
+        eventProperties = {
+            [key]: value
+        }
+    }
     const eventName = document.querySelector('#customEvent').value
     const sdk = await UA
-    const event = new sdk.CustomEvent(eventName)
+    const event = new sdk.CustomEvent(eventName,null,eventProperties)
     console.log(event)
     await event.track()
 }

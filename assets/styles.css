@@ -340,7 +340,7 @@
     background-position: left center;
     background-repeat: no-repeat;
   }
-  #nuid-form, #ceForm {
+  #nuid-form{
     text-align: right;
   }
   .form-block {
@@ -353,7 +353,7 @@
     width: 100%;
     box-sizing: border-box;
   }
-  .onNUID label {
+  .onNUID label, .addProperties label {
     font-size: 18px;
   }
   input[type=checkbox] {

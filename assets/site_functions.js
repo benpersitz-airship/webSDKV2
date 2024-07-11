@@ -31,6 +31,18 @@ function main(){
     }
   }
 
+  function toggleProperties(){
+    const toggleState = document.querySelector('#propertyToggle').checked
+    const target = document.querySelector(".propertyList")
+    const form = document.querySelector("#propertyForm")
+    if(toggleState == true){
+        target.style.display = 'block'
+    } else {
+        form.reset()
+        target.style.display = 'none'
+    }
+  }
+
   window.addEventListener("load", (event) => {
     main();
     smsEmbeddedForm();

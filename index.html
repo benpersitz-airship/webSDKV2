@@ -152,7 +152,7 @@
               <div rel="email-opt-in" class="opt-in-forms"></div>
             </div>
           </div>
-        </div>
+        </div> 
       </div>
 
       <div class="section">
@@ -179,6 +179,38 @@
               <button type="button" name="setUser" class="btn ease" id="setUser" onclick="associateNamedUser();">Set User</button>
             </form>
           </div>
+        </div>
+
+        <div class="action-box" id="customEvents">
+            <h3>Custom Events</h3>
+            <p>Custom events extend our default events. Such events as opens or tag change are applicable to all apps and websites. Custom events, on the other hand, are specific to the needs of your app or website. For example, you may be interested in tracking the order created event in your e-commerce app, the playback started event in your content delivery platform, or the OnParticipatedInExperimentNotification event in your A/B testing application for tracking user participation.</p>
+            <div class="note">
+                <header class="note-note">
+                    Note
+                </header>
+                <p>In order to use custom events for segmentation, make sure you configure them in the your Airship project first. <a href="https://docs.airship.com/guides/messaging/user-guide/project/config/events/" target="blank">See our Manage Events documentation for more information.</a></p>
+                <form id="ceForm" class="actions">
+                    <label for="customEvent">Custom Event Name</label>
+                    <input type="text" id="customEvent" name="customEvent" placeholder="Event Name">
+                    <button type="button" name="createEvent" class="btn ease" id="createEvent" onclick="createCustomEvent();">Process Event</button>
+                </form>
+                <div class="addProperties">
+                    <form id="propertyForm" class ="actions">
+                        <input type="checkbox" name="propertyToggle" id="propertyToggle" onclick="toggleProperties()">
+                        <label for="propertyToggle">Add Event Property</label>
+                        <div class="propertyList" style="display: none">
+                            <div class="form-block">
+                                <label for="propertyKey">Property Key</label>
+                                <input type="text" id="propertyKey" name="propertyKey" placeholder="Key">
+                              </div>
+                              <div class="form-block">
+                                <label for="propretyValue">Property Value</label>
+                                <input type="text" id="propertyValue" name="propertyValue" placeholder="Value">
+                              </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
   <!-- TAGS -->
