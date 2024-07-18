@@ -244,7 +244,7 @@ async function createCustomEvent(){
             [key]: value
         }
     }
-    const eventName = document.querySelector('#customEvent').value
+    const eventName = document.querySelector('#customEvent').value.toLowerCase()
     const sdk = await UA
     const event = new sdk.CustomEvent(eventName,null,eventProperties)
     console.log(event)
