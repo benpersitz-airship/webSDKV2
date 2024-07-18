@@ -30,7 +30,11 @@ function main(){
       }
     }
   }
-
+  async function trackScreen(){
+    const sdk = await UA 
+    await sdk.analytics.trackScreen("MainScreen")
+    console.log("tracked screen")
+  }
   function toggleProperties(){
     const toggleState = document.querySelector('#propertyToggle').checked
     const target = document.querySelector(".propertyList")
@@ -45,6 +49,7 @@ function main(){
 
   window.addEventListener("load", (event) => {
     main();
+    trackScreen()
     smsEmbeddedForm();
     emailEmbeddedForm();
     console.log('Have you registered or declined notifications from this site yet? \n \nYou may need to update your browser settings to retrigger the prompt');
