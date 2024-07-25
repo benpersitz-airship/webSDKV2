@@ -202,7 +202,12 @@ async function setTags() {
 	const tagNU = document.getElementById("tagNU");
 	const tagGroup = document.getElementById("tag-group").value;
 	const tagString = document.getElementById("tag-name").value;
-	let tagArray = tagString.split(",");
+    let tagArray;
+    if(tagString == ""){
+        tagArray = []
+    } else {
+        tagArray = tagString.split(",");
+    }
 	const trimmedTagArray = tagArray.map((tag) => tag.trim());
 	if (tagNU.checked) {
 		const contact = await sdk.contact;
