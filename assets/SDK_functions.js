@@ -209,6 +209,7 @@ async function setTags() {
         tagArray = tagString.split(",");
     }
 	const trimmedTagArray = tagArray.map((tag) => tag.trim());
+    console.log(trimmedTagArray)
 	if (tagNU.checked) {
 		const contact = await sdk.contact;
 		const editor = contact.editTags();
