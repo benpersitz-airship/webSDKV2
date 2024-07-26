@@ -49,7 +49,7 @@ function main(){
 
   function determinePlatform() {
     const userAgent = window.navigator.userAgent
-    if(userAgent.toLowerCase().contains("safari")){
+    if(userAgent.toLowerCase().includes("safari")){
         userAgent.standalone == true ? console.log("saved to home screen") : console.log("safari")
     } else {
         window.matchMedia('(display-mode: standalone)').matches ? console.log("Saved to home screen") : console.log("non safari browser")
