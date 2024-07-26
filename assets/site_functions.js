@@ -47,9 +47,19 @@ function main(){
     }
   }
 
+  function determinePlatform() {
+    const userAgent = window.navigator.userAgent
+    if(userAgent.toLowerCase().contains("safari")){
+        userAgent.standalone == true ? console.log("saved to home screen") : console.log("safari")
+    } else {
+        window.matchMedia('(display-mode: standalone)').matches ? console.log("Saved to home screen") : console.log("non safari browser")
+    }
+  }
+
   window.addEventListener("load", (event) => {
     main();
     trackScreen()
+    determinePlatform()
     smsEmbeddedForm();
     emailEmbeddedForm();
     console.log('Have you registered or declined notifications from this site yet? \n \nYou may need to update your browser settings to retrigger the prompt');
