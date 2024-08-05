@@ -1,3 +1,6 @@
+//global vars
+let embeddedViews = []
+
 // mobile navbar
 function main(){
     var menuIconOpen = document.getElementsByClassName("open")[0];
@@ -61,11 +64,22 @@ function main(){
     }
   }
 
+  async function registerEmbeddedContainers() {
+    const sdk = await UA
+    const targets = Array.from(document.querySelectorAll('.airship-embedded'))
+    for(let target of targets){
+        const containerId = target.id
+        const view = sdk.components.embeddedViews.create(target, target.id)
+        embeddedViews.push(view)
+    }
+  }
+
   window.addEventListener("load", (event) => {
     main();
     trackScreen()
     determinePlatform()
     smsEmbeddedForm();
     emailEmbeddedForm();
+    registerEmbeddedContainers()
     console.log('Have you registered or declined notifications from this site yet? \n \nYou may need to update your browser settings to retrigger the prompt');
   })
