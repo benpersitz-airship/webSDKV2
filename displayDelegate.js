@@ -12,7 +12,7 @@ async function addTagsFromScene(tagToSet){
     const sdk = await UA
     const contact = await sdk.contact;
     const editor = await contact.editTags();
-    editor.add("Device", tagToSet).apply()
+    editor.add("scene_tags", tagToSet).apply()
     console.log("set tags on contact")
 }
 
