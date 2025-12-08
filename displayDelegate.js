@@ -11,6 +11,7 @@ async function addDelegate(){
     const sdk = await UA
     let delegate = prepareDelegate()
     await sdk.components.inAppAutomation.setDisplayDelegate(delegate)
+    console.log("delegate set")
 }
 
 addDelegate()
