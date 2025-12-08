@@ -1,6 +1,6 @@
 function prepareDelegate(){
     const delegate = {
-        messageFinishedDisplay: (message) => {
+        messageFinishedDisplaying: (message) => {
             console.log(message)
         }
     }
@@ -10,7 +10,7 @@ function prepareDelegate(){
 async function addDelegate(){
     const sdk = await UA
     let delegate = prepareDelegate()
-    await sdk.components.inAppAutomation.setDisplayDelegate(delegate)
+    sdk.components.inAppAutomation.setDisplayDelegate(delegate)
     console.log("delegate set")
 }
 
